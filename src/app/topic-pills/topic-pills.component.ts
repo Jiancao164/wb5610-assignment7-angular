@@ -10,10 +10,7 @@ export class TopicPillsComponent implements OnInit {
 
   constructor(private route: ActivatedRoute) { }
 
-  topics = [
-    {_id: '123', title: 'Topic 1'}
-  ]
-
+  topics = [];
   courseId = ''
   moduleId = ''
   lessonId = ''
@@ -24,9 +21,11 @@ export class TopicPillsComponent implements OnInit {
       this.moduleId = params.moduleId;
       this.lessonId = params.lessonId;
       this.topicId = params.topicId;
-      fetch(`https://wbdv-generic-server.herokuapp.com/api/jannunzi/lessons/${this.lessonId}/topics`)
-        .then(response => response.json())
-        .then(topics => this.topics = topics);
+      if (params.lessonId) {
+        fetch(`https://wbdv-generic-server.herokuapp.com/api/jannunzi/lessons/${this.lessonId}/topics`)
+          .then(response => response.json())
+          .then(topics => this.topics = topics);
+      }
     });
   }
 }
